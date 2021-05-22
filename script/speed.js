@@ -1,6 +1,5 @@
 var fileName =
   "https://powerful-tor-65140.herokuapp.com/http://212.183.159.230/100MB.zip";
-// "http://speedtest.tupelo.matraex.com/100MB.txt";
 function abort() {
   request.abort();
 }
@@ -33,7 +32,7 @@ let times = [];
 let speeds = [];
 let totalSpeeds = 0;
 function download() {
-  console.log("this is working?")
+  console.log("this is working?");
   times = [];
   speeds = [];
   totalSpeeds = 0;
@@ -78,23 +77,3 @@ function download() {
     speedGraph.update();
   };
 }
-
-function progressBar(progressVal, totalPercentageVal = 100) {
-  var strokeVal = (4.64 * 100) / totalPercentageVal;
-  var x = document.querySelector(".progress-circle-prog");
- // x.style.strokeDasharray = progressVal * strokeVal + " 999";
-  // var el = document.querySelector(".progress-text");
-  // var from = $(".progress-text").data("progress");
-  // $(".progress-text").data("progress", progressVal);
-  // var start = new Date().getTime();
-
-  // setTimeout(function () {
-  //   var now = new Date().getTime() - start;
-  //   var progress = now / 700;
-  //   el.innerHTML = (progressVal / totalPercentageVal) * 100 + "%";
-  //   if (progress < 1) setTimeout(arguments.callee, 10);
-  // }, 10);
-}
-
-progressBar(30, 100);
-
