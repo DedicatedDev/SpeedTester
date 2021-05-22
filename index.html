@@ -2,6 +2,7 @@
   <head>
     <link rel="stylesheet" type="text/css" href="bootstrap-darkly.min.css" />
     <link rel="stylesheet" type="text/css" href="./css/style.css" />
+    <link rel="stylesheet" type="text/css" href="./css/progressBar.css" />
     <link
       rel="stylesheet"
       type="text/css"
@@ -61,8 +62,15 @@
       type="text/javascript"
       src="./components/knob/lib/presets/p5.js"
     ></script>
-    <script type="text/javascript"></script>
+
     <script src="./components/chart/chart.min.js"></script>
+    <link
+      type="text/stylesheet"
+      href="./components/loadingBar/loading-bar.css"
+    />
+    <script>
+      console.log(localStorage.getItem("data").toString());
+    </script>
   </head>
 
   <body>
@@ -86,10 +94,8 @@
                 Select Server
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Server1</a>
-                <a class="dropdown-item" href="#">Server2</a>
-                <a class="dropdown-item" href="#">Server3</a>
-                <a class="dropdown-item" href="#">Server4</a>
+                <a class="dropdown-item" href="#" onclick="changedServer(0)">Server1</a>
+                <a class="dropdown-item" href="#" onclick="changedServer(1)">Server2</a>
               </div>
             </div>
             <div>
@@ -105,13 +111,8 @@
             </div>
           </div>
         </div>
+
         <div class="testButtonContainer">
-          <div
-            id="meanSpeed"
-            class="progress-bar position"
-            data-percent="80"
-            data-color="#7E7E7E,#12b321"
-          ></div>
           <button class="btn btn-2 testButton" onclick="download()">
             <h3>Start Test</h3>
           </button>
@@ -135,30 +136,11 @@
             <tr>
               <th scope="col">No</th>
               <th scope="col">Date</th>
-              <th scope="col">Speed</th>
+              <th scope="col">Speed (kbps)</th>
               <th scope="col">Server</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>12/31/2020</td>
-              <td>12.4MB/s</td>
-              <td>https://servertest.com/</td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>12/31/2020</td>
-              <td>12.4MB/s</td>
-              <td>https://servertest.com/</td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>12/31/2020</td>
-              <td>12.4MB/s</td>
-              <td>https://servertest.com/</td>
-            </tr>
-          </tbody>
+          <tbody id="savedDataList"></tbody>
         </table>
       </div>
     </div>

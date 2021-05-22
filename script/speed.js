@@ -27,10 +27,11 @@ const initialOptions = {
 
 const ctx = document.getElementById("line-chart");
 const speedGraph = new Chart(ctx, initialOptions);
-
+const numb = document.querySelector(".numb");
 let times = [];
 let speeds = [];
 let totalSpeeds = 0;
+retrieveSavedData();
 function download() {
   console.log("this is working?");
   times = [];
@@ -44,9 +45,6 @@ function download() {
 
   request.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-      var obj = window.URL.createObjectURL(this.response);
-      document.getElementById("save-file").setAttribute("href", obj);
-      document.getElementById("save-file").setAttribute("download", fileName);
       setTimeout(function () {
         window.URL.revokeObjectURL(obj);
       }, 60 * 1000);
@@ -69,11 +67,74 @@ function download() {
     minutes = Math.floor(minutes);
     times.push(`${minutes}:${seconds}`);
     speeds.push(kbps);
-    meanSpeeds = totalSpeeds / (speeds.length ?? 1);
+    meanSpeeds = (totalSpeeds / (speeds.length ?? 1)).toFixed(2);
+
     speedGraph.data.labels.push(`${minutes}:${seconds}`);
     speedGraph.data.datasets.forEach((dataset) => {
       dataset.data.push(kbps);
     });
     speedGraph.update();
+    if (percent_complete == 100) {
+      var testTime = new Date().toISOString();
+      var newData = {
+        testTime: testTime,
+        speed: meanSpeeds,
+        server: currentServerUrl,
+      };
+      const oldJStringData = localStorage.getItem("data");
+      let oldData = JSON.parse(oldJStringData);
+      if (oldData == null) {
+        oldData = { testData: [] };
+      }
+      console.log(oldData);
+      oldData.testData.push(newData);
+      var jsonString = JSON.stringify(oldData);
+      localStorage.setItem("data", jsonString);
+      retrieveSavedData(newData);
+    }
   };
+}
+
+function retrieveSavedData(newData) {
+  const savedData = JSON.parse(localStorage.getItem("data"));
+  if (newData == null) {
+    var index = 1;
+    savedData.testData.forEach((element) => {
+      addNewItem(index, element);
+      index++;
+    });
+  } else {
+    const newIndex = savedData.testData.length;
+    addNewItem(newIndex, newData);
+  }
+}
+
+function addNewItem(index, element) {
+  const dataTable = document.getElementById("savedDataList");
+  let cell = document.createElement("tr");
+  const scope = document.createElement("th");
+  scope.innerHTML = `${index}`;
+  const date = document.createElement("td");
+  date.innerHTML = `${element.testTime}`;
+  const speed = document.createElement("td");
+  speed.innerHTML = `${element.speed}`;
+  const server = document.createElement("td");
+  server.innerHTML = `${element.server}`;
+  cell.appendChild(scope);
+  cell.appendChild(date);
+  cell.appendChild(speed);
+  cell.appendChild(server);
+  dataTable.appendChild(cell);
+}
+
+function changedServer(serverIndex) {
+  const dropDown = document.getElementById("dropdownMenuButton");
+  selectedServerUrl = serverUrls[serverIndex];
+  switch (serverIndex) {
+    case 1:
+      dropDown.innerHTML = "Server 2";
+    default:
+      dropDown.innerHTML = "Server 1";
+      break;
+  }
 }
