@@ -69,9 +69,20 @@
   color: white;
   border-radius: 50%;
   position: absolute;
+  transition: all 1000ms ease-in-out;
 }
 .testButton:hover {
   display: block;
+  background-color: #46b358;
+}
+.stopTestButton{
+  width: 50%;
+  height: 44;
+  background-color: rgb(203, 59, 59);
+  border-radius: 15px;
+}
+.stopTestButton:hover{
+  background-color:rgb(236, 163, 163) ;
 }
 
 .dropdown {

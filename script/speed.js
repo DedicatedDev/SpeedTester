@@ -2,6 +2,17 @@ var fileName =
   "https://powerful-tor-65140.herokuapp.com/http://212.183.159.230/100MB.zip";
 function abort() {
   request.abort();
+  resetTester();
+}
+
+function resetTester() {
+  testButton.disabled = false;
+  testButton.style.setProperty("opacity", 1.0);
+  times = [];
+  speeds = [];
+  totalSpeeds = 0;
+  resetGraph();
+  draw(0);
 }
 
 const initialOptions = {
@@ -12,31 +23,54 @@ const initialOptions = {
       {
         data: [],
         label: "speed",
-        borderColor: "#3e95cd",
-        fill: false,
+        borderColor: "#4ADA0C",
+        borderWidth: 1,
+        lineTension: 0.25,
+        pointRadius: 0,
+        fill: true,
       },
     ],
   },
   options: {
-    title: {
-      display: true,
-      text: "World population per region (in millions)",
+    responsive: true,
+    animation: {
+      duration: 1.5,
+      easing: "linear",
+    },
+    legend: false,
+    scales: {
+      xAxes: [
+        {
+          type: "time",
+          display: true,
+        },
+      ],
+      YAxes: [
+        {
+          type: "speed",
+          display: true,
+        },
+      ],
     },
   },
 };
 
+const testButton = document.getElementById("startBtn");
 const ctx = document.getElementById("line-chart");
 const speedGraph = new Chart(ctx, initialOptions);
 const numb = document.querySelector(".numb");
+
 let times = [];
 let speeds = [];
 let totalSpeeds = 0;
 retrieveSavedData();
 function download() {
-  console.log("this is working?");
+  testButton.style.setProperty("opacity", 0);
+  testButton.disabled = true;
   times = [];
   speeds = [];
   totalSpeeds = 0;
+  resetGraph();
   var startTime = new Date().getTime();
   request = new XMLHttpRequest();
   request.responseType = "arraybuffer";
@@ -70,11 +104,14 @@ function download() {
     meanSpeeds = (totalSpeeds / (speeds.length ?? 1)).toFixed(2);
 
     speedGraph.data.labels.push(`${minutes}:${seconds}`);
+    speedGraph.data.datasets.pointRadius = 0;
     speedGraph.data.datasets.forEach((dataset) => {
       dataset.data.push(kbps);
     });
     speedGraph.update();
-    if (percent_complete == 100) {
+    draw(percent_complete);
+
+    if (percent_complete === 100) {
       var testTime = new Date().toISOString();
       var newData = {
         testTime: testTime,
@@ -93,6 +130,12 @@ function download() {
       retrieveSavedData(newData);
     }
   };
+}
+
+function resetGraph() {
+  speedGraph.data.labels = [];
+  speedGraph.data = initialOptions.data;
+  speedGraph.options = initialOptions.options;
 }
 
 function retrieveSavedData(newData) {

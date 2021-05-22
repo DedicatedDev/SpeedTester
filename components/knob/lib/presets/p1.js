@@ -12,6 +12,7 @@ Ui.P1.prototype.createElement = function() {
     pointerWidth: 3,
     pointerHeight: this.width / 5,
     offset: this.width / 2 - this.width / 3.3 - this.width / 10
+    // offset: this.width / 2 - this.width / 3.3 - this.width / 10
   }));
 
   this.addComponent(new Ui.Scale(this.merge(this.options, {

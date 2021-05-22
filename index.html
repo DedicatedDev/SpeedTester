@@ -3,6 +3,7 @@
     <link rel="stylesheet" type="text/css" href="bootstrap-darkly.min.css" />
     <link rel="stylesheet" type="text/css" href="./css/style.css" />
     <link rel="stylesheet" type="text/css" href="./css/progressBar.css" />
+    <link rel="stylesheet" type="text/css" href="./css/circluarProgress.css" />
     <link
       rel="stylesheet"
       type="text/css"
@@ -94,8 +95,12 @@
                 Select Server
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#" onclick="changedServer(0)">Server1</a>
-                <a class="dropdown-item" href="#" onclick="changedServer(1)">Server2</a>
+                <a class="dropdown-item" href="#" onclick="changedServer(0)"
+                  >Server1</a
+                >
+                <a class="dropdown-item" href="#" onclick="changedServer(1)"
+                  >Server2</a
+                >
               </div>
             </div>
             <div>
@@ -111,10 +116,44 @@
             </div>
           </div>
         </div>
-
-        <div class="testButtonContainer">
-          <button class="btn btn-2 testButton" onclick="download()">
-            <h3>Start Test</h3>
+        <div style="display: flex; flex-direction: column; align-items: center">
+          <div class="testButtonContainer">
+            <div style="position: relative">
+              <svg id="progressBar">
+                <path id="ring" fill="#00c790" />
+                <circle cx="130" cy="130" r="115" fill="#0A0A0A" />
+                <circle
+                  cx="130"
+                  cy="130"
+                  r="125px"
+                  fill="none"
+                  stroke="#00c790"
+                  stroke-width="7"
+                  opacity=".5"
+                />
+                <text
+                  x="130"
+                  y="130"
+                  text-anchor="middle"
+                  dominant-baseline="central"
+                  fill="#00c790"
+                  font-size="60"
+                  font-weight="bold"
+                >
+                  0
+                </text>
+              </svg>
+            </div>
+            <button
+              id="startBtn"
+              class="btn btn-2 testButton"
+              onclick="download()"
+            >
+              <h3>Start Test</h3>
+            </button>
+          </div>
+          <button class="stopTestButton" onclick="abort()">
+            <h4 style="color: white">Reset</h4>
           </button>
         </div>
 
@@ -176,6 +215,7 @@
       </filter>
     </svg>
     <script src="./script/speed.js"></script>
+    <script src="./script/circluarProgress.js"></script>
     <script type="text/javascript" src="./script/knob.js"></script>
   </body>
 </html>
