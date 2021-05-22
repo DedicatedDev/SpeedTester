@@ -1,5 +1,5 @@
 var fileName =
-  "https://powerful-tor-65140.herokuapp.com/http://212.183.159.230/100MB.zip";
+  "https://powerful-tor-65140.herokuapp.com/http://212.183.159.230/20MB.zip";
 function abort() {
   request.abort();
   resetTester();
@@ -101,7 +101,6 @@ function download() {
     minutes = Math.floor(minutes);
     times.push(`${minutes}:${seconds}`);
     speeds.push(kbps);
-    meanSpeeds = (totalSpeeds / (speeds.length ?? 1)).toFixed(2);
 
     speedGraph.data.labels.push(`${minutes}:${seconds}`);
     speedGraph.data.datasets.pointRadius = 0;
@@ -112,6 +111,18 @@ function download() {
     draw(percent_complete);
 
     if (percent_complete === 100) {
+      const deltaCnt = Math.floor(speeds.length * 0.1);
+      const initNo = deltaCnt + 1;
+      const totalNo = speeds.length - 2 * deltaCnt;
+      if (totalNo > 0) {
+        const validData = speeds.slice(initNo, totalNo);
+        meanSpeeds = 0;
+        validData.forEach((element) => {
+          meanSpeeds += element;
+        });
+        meanSpeeds = (meanSpeeds / totalNo).toFixed(2);
+      }
+
       var testTime = new Date().toISOString();
       var newData = {
         testTime: testTime,
