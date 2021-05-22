@@ -1,0 +1,202 @@
+
+<!-- <html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="bootstrap-darkly.min.css" />
+    <link rel="stylesheet" type="text/css" href="./css/style.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./components/knob/css/customize-presets.css"
+    />
+
+    <link rel="stylesheet" href="./components/knob/css/customize-presets.css" />
+    <link rel="stylesheet" href="./components/knob/lib/presets/p1.css" />
+    <link rel="stylesheet" href="./components/knob/lib/presets/p1.css" />
+    <link rel="stylesheet" href="./components/knob/lib/presets/p2.css" />
+    <link rel="stylesheet" href="./components/knob/lib/presets/p3.css" />
+    <link rel="stylesheet" href="./components/knob/lib/presets/p4.css" />
+    <link rel="stylesheet" href="./components/knob/lib/presets/p5.css" />
+
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.1/chart.min.js"></script>
+    <script
+      type="text/javascript"
+      src="./components/knob/dist/knob.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="./components/knob/lib/presets/p1.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="./components/knob/lib/presets/p2.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="./components/knob/lib/presets/p1.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="./components/knob/lib/presets/p3.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="./components/knob/lib/presets/p4.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="./components/knob/lib/presets/p5.js"
+    ></script>
+
+    <!-- progressBar -->
+    <!-- <link rel="stylesheet" href="./components/progressBar/jQuery-plugin-progressbar.css">
+	  <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	  <script src="./components/progressBar/jQuery-plugin-progressbar.js"></script> -->
+  <!-- </head>
+
+  <body>
+      <div class="container">
+      <h1 style="color: aliceblue; text-align: center;margin-top: 30;">Speed Test</h1>
+      <div class="mainContainer">
+        <div class="settingWrapper">
+            <h2 style="text-align: center;">Settings</h2> 
+            <div class="settingContainer" >
+                <div class="dropdown">
+                    <button
+                        class="btn btn-secondary dropdown-toggle"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                    >Select Server</button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Server1</a>
+                        <a class="dropdown-item" href="#">Server2</a>
+                        <a class="dropdown-item" href="#">Server3</a>
+                        <a class="dropdown-item" href="#">Server4</a>
+                  </div>
+                </div>
+            <div>
+            <input class="preset1" type="range" data-width="250" data-height="250" data-angleOffset="270" data-angleRange="180" data-labels="20MB,100MB,200MB,500MB,1GB" /> 
+          </div>
+        </div> 
+        </div>
+        <div class="testButtonContainer">
+          	<div id="meanSpeed" class="progress-bar position" data-percent="80" data-color="#7E7E7E,#12b321"></div>
+            <button class="btn btn-2 testButton"  onclick="download()">
+                  <h3>Start Test</h3>
+            </button>
+        </div>
+       
+        <div class="settingWrapper">
+            <h2 style="text-align: center;">Result</h2>
+            <div class="settingContainer">
+                <canvas id="line-chart" ></canvas>
+            </div>
+        </div>
+        
+      </div>
+      
+      <div class="resultContainer">
+        <h2 style="text-align: center;margin-bottom: 20;">Test Results</h2>
+        <table class="table table-dark" style="border-radius: 5px;background-color: clear;">
+          <thead>
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Date</th>
+              <th scope="col">Speed</th>
+              <th scope="col">Server</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>12/31/2020</td>
+              <td>12.4MB/s</td>
+              <td>https://servertest.com/</td>
+            </tr>
+            <tr>
+              <th scope="row">1</th>
+              <td>12/31/2020</td>
+              <td>12.4MB/s</td>
+              <td>https://servertest.com/</td>
+            </tr>
+            <tr>
+              <th scope="row">1</th>
+              <td>12/31/2020</td>
+              <td>12.4MB/s</td>
+              <td>https://servertest.com/</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+       
+      <svg>
+            <filter id="dropshadow" height="150%" width="150%">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+                <feOffset dx="0" dy="3" result="offsetblur"/>
+                <feMerge>
+                    <feMergeNode/>
+                    <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+            </filter>
+            <filter id='inner-shadow'>
+                <!-- Shadow Offset -->
+                <feOffset
+                    dx='0'
+                    dy='5'
+                    />
+        
+                <!-- Shadow Blur -->
+                <feGaussianBlur
+                    stdDeviation='5'
+                    result='offset-blur'
+                    />
+        
+                <!-- Invert the drop shadow
+                 to create an inner shadow -->
+                <feComposite
+                    operator='out'
+                    in='SourceGraphic'
+                    in2='offset-blur'
+                    result='inverse'/>
+                <!-- Color & Opacity -->
+                <feFlood
+                    flood-color='black'
+                    flood-opacity='0.75'
+                    result='color'/>
+                <!-- Clip color inside shadow -->
+                 <feComposite
+                    operator='in'
+                    in='color'
+                    in2='inverse'
+                    result='shadow'/>
+                <!-- Put shadow over original object -->
+                <feComposite
+                    operator='over'
+                    in='shadow'
+                    in2='SourceGraphic'/>
+            </filter>
+      </svg>
+      <scripts type="text/javascript" src="./script/knob.js"></scripts>
+      <!-- <script type="text/javascript" src="./script/progressBar.js"></script> -->
+      <!-- <script type="text/javascript" src="./script/speed.js"></script> -->
+
+  </body>
+</html> --> -->
