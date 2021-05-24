@@ -1,5 +1,5 @@
-var fileName = "http://speedtest.tupelo.matraex.com/100MB.txt";
-//"https://powerful-tor-65140.herokuapp.com/http://212.183.159.230/100MB.zip";
+var fileName = //"http://speedtest.tupelo.matraex.com/100MB.txt";
+  "https://powerful-tor-65140.herokuapp.com/http://212.183.159.230/100MB.zip";
 function abort() {
   request.abort();
   resetTester();
@@ -103,9 +103,14 @@ function download() {
     times.push(`${minutes}:${seconds}`);
     speeds.push(kbps);
     const mbps = kbps / 1024;
-    const ratios = calcRatio(mbps);
+    const ratios = calcRatio(mbps) ?? {
+      ratio: 0,
+      startValue: 0,
+      offset: 0,
+    };
+
     const equalValue =
-      ratios.ratio * (mbps - ratios.startValue) + ratios.offset;
+      ratios.ratio * (mbps - ratios?.startValue) + ratios?.offset;
     knob.setValue(equalValue);
     knob.setProperty("displayVal", mbps.toFixed(2));
     draw(percent_complete);
