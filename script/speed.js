@@ -1,5 +1,5 @@
-var fileName =
-  "https://powerful-tor-65140.herokuapp.com/http://212.183.159.230/100MB.zip";
+var fileName = "http://speedtest.tupelo.matraex.com/100MB.txt";
+//"https://powerful-tor-65140.herokuapp.com/http://212.183.159.230/100MB.zip";
 function abort() {
   request.abort();
   resetTester();
@@ -109,14 +109,13 @@ function download() {
     knob.setValue(equalValue);
     knob.setProperty("displayVal", mbps.toFixed(2));
     draw(percent_complete);
-    
+
     speedGraph.data.labels.push(`${minutes}:${seconds}`);
     speedGraph.data.datasets.pointRadius = 0;
     speedGraph.data.datasets.forEach((dataset) => {
       dataset.data.push(kbps);
     });
     speedGraph.update();
-  
 
     if (percent_complete === 100) {
       const deltaCnt = Math.floor(speeds.length * 0.1);
