@@ -1,5 +1,5 @@
 var fileName =
-  "https://powerful-tor-65140.herokuapp.com/http://212.183.159.230/20MB.zip";
+  "https://powerful-tor-65140.herokuapp.com/http://212.183.159.230/100MB.zip";
 function abort() {
   request.abort();
   resetTester();
@@ -13,6 +13,7 @@ function resetTester() {
   totalSpeeds = 0;
   resetGraph();
   draw(0);
+  knob.setValue(0);
 }
 
 const initialOptions = {
@@ -101,14 +102,21 @@ function download() {
     minutes = Math.floor(minutes);
     times.push(`${minutes}:${seconds}`);
     speeds.push(kbps);
-
+    const mbps = kbps / 1024;
+    const ratios = calcRatio(mbps);
+    const equalValue =
+      ratios.ratio * (mbps - ratios.startValue) + ratios.offset;
+    knob.setValue(equalValue);
+    knob.setProperty("displayVal", mbps.toFixed(2));
+    draw(percent_complete);
+    
     speedGraph.data.labels.push(`${minutes}:${seconds}`);
     speedGraph.data.datasets.pointRadius = 0;
     speedGraph.data.datasets.forEach((dataset) => {
       dataset.data.push(kbps);
     });
     speedGraph.update();
-    draw(percent_complete);
+  
 
     if (percent_complete === 100) {
       const deltaCnt = Math.floor(speeds.length * 0.1);
@@ -190,5 +198,21 @@ function changedServer(serverIndex) {
     default:
       dropDown.innerHTML = "Server 1";
       break;
+  }
+}
+
+function calcRatio(mbps) {
+  if (mbps < 1) {
+    return { ratio: 12.5, startValue: 0, offset: 0 };
+  } else if (mbps >= 1 && mbps < 5) {
+    return { ratio: 3.125, startValue: 1, offset: 12.5 };
+  } else if (mbps >= 5 && mbps < 10) {
+    return { ratio: 2.5, startValue: 5, offset: 25 };
+  } else if (mbps >= 10 && mbps < 30) {
+    return { ratio: 1.25, startValue: 10, offset: 37.5 };
+  } else if (mbps >= 30 && mbps < 50) {
+    return { ratio: 0.625, startValue: 30, offset: 50 };
+  } else if (mbps >= 50 && mbps <= 100) {
+    return { ratio: 0.5, startValue: 50, offset: 62.5 };
   }
 }
