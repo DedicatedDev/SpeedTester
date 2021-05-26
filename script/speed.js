@@ -1,8 +1,15 @@
-var fileName = //"http://speedtest.tupelo.matraex.com/100MB.txt";
-  "https://powerful-tor-65140.herokuapp.com/http://212.183.159.230/100MB.zip";
+// var fileName =
+//   "https://powerful-tor-65140.herokuapp.com/https://www.kenrockwell.com/contax/images/g2/examples/31120037-5mb.jpg"; //"http://speedtest.tupelo.matraex.com/100MB.txt";
+// //"https://powerful-tor-65140.herokuapp.com/http://212.183.159.230/100MB.zip";
+// var fileName =
+//   "https://powerful-tor-65140.herokuapp.com/http://212.183.159.230/100MB.zip";
 function abort() {
   request.abort();
   resetTester();
+}
+
+function stop() {
+  request.abort();
 }
 
 function resetTester() {
@@ -65,6 +72,44 @@ let times = [];
 let speeds = [];
 let totalSpeeds = 0;
 retrieveSavedData();
+// function download() {
+//   var userImageLink =
+//     "https://www.kenrockwell.com/contax/images/g2/examples/31120037-5mb.jpg";
+//   var time_start, end_time;
+
+//   // The size in bytes
+//   var downloadSize = 5616998;
+//   var downloadImgSrc = new Image();
+
+//   downloadImgSrc.onload = function () {
+//     end_time = new Date().getTime();
+//     displaySpeed();
+//   };
+//   time_start = new Date().getTime();
+//   downloadImgSrc.src = userImageLink;
+//   document.write("time start: " + time_start);
+//   document.write("<br>");
+
+//   function displaySpeed() {
+//     var timeDuration = (end_time - time_start) / 1000;
+//     var loadedBits = downloadSize * 8;
+
+//     /* Converts a number into string
+//                    using toFixed(2) rounding to 2 */
+//     var bps = (loadedBits / timeDuration).toFixed(2);
+//     var speedInKbps = (bps / 1024).toFixed(2);
+//     var speedInMbps = (speedInKbps / 1024).toFixed(2);
+//     alert(
+//       "Your internet connection speed is: \n" +
+//         bps +
+//         " bps\n" +
+//         speedInKbps +
+//         " kbps\n" +
+//         speedInMbps +
+//         " Mbps\n"
+//     );
+//   }
+// }
 function download() {
   testButton.style.setProperty("opacity", 0);
   testButton.disabled = true;
@@ -75,7 +120,10 @@ function download() {
   var startTime = new Date().getTime();
   request = new XMLHttpRequest();
   request.responseType = "arraybuffer";
-  request.open("get", fileName, true);
+  request.open("get", currentServerUrl, true);
+  request.setRequestHeader("Cache-Control", "no-cache");
+  request.setRequestHeader("Pragma", "no-cache");
+  request.setRequestHeader("Accept-Encoding", "gzip, deflate, br");
   request.send();
 
   request.onreadystatechange = function () {
@@ -96,6 +144,7 @@ function download() {
     totalSpeeds += kbps;
     var time = (e.total - e.loaded) / bps;
     var currentTime = e.loaded / bps;
+
     var seconds = currentTime % 60;
     var minutes = currentTime / 60;
     seconds = Math.floor(seconds);
@@ -122,7 +171,7 @@ function download() {
     });
     speedGraph.update();
 
-    if (percent_complete === 100) {
+    if (percent_complete === 100 || currentTime > 10000) {
       const deltaCnt = Math.floor(speeds.length * 0.1);
       const initNo = deltaCnt + 1;
       const totalNo = speeds.length - 2 * deltaCnt;
@@ -135,9 +184,8 @@ function download() {
         meanSpeeds = (meanSpeeds / totalNo).toFixed(2);
       }
 
-      var testTime = new Date().toISOString();
       var newData = {
-        testTime: testTime,
+        testTime: getFormattedTime(new Date()),
         speed: meanSpeeds,
         server: currentServerUrl,
       };
@@ -195,12 +243,23 @@ function addNewItem(index, element) {
 
 function changedServer(serverIndex) {
   const dropDown = document.getElementById("dropdownMenuButton");
+  console.log(serverIndex);
   selectedServerUrl = serverUrls[serverIndex];
   switch (serverIndex) {
+    case 0:
+      dropDown.innerHTML = "http://speedtest.tupelo.matraex.com/20MB";
+      break;
     case 1:
-      dropDown.innerHTML = "Server 2";
+      dropDown.innerHTML = "http://speedtest.tupelo.matraex.com/100MB";
+      break;
+    case 2:
+      dropDown.innerHTML = "http://speedtest2.matraex.com/20MB";
+      break;
+    case 3:
+      dropDown.innerHTML = "http://speedtest2.matraex.com/100MB";
+      break;
     default:
-      dropDown.innerHTML = "Server 1";
+      dropDown.innerHTML = "http://speedtest.tupelo.matraex.com/20MB";
       break;
   }
 }
@@ -219,4 +278,20 @@ function calcRatio(mbps) {
   } else if (mbps >= 50 && mbps <= 100) {
     return { ratio: 0.5, startValue: 50, offset: 62.5 };
   }
+}
+
+function getFormattedTime(date) {
+  var dateString =
+    date.getUTCFullYear() +
+    "/" +
+    ("0" + (date.getUTCMonth() + 1)).slice(-2) +
+    "/" +
+    ("0" + date.getUTCDate()).slice(-2) +
+    " " +
+    ("0" + date.getUTCHours()).slice(-2) +
+    ":" +
+    ("0" + date.getUTCMinutes()).slice(-2) +
+    ":" +
+    ("0" + date.getUTCSeconds()).slice(-2);
+    return dateString;
 }

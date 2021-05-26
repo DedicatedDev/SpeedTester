@@ -1,5 +1,6 @@
 <html>
   <head>
+    <meta name="viewport" content="768, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="bootstrap-darkly.min.css" />
     <link rel="stylesheet" type="text/css" href="./css/style.css" />
     <link rel="stylesheet" type="text/css" href="./css/circluarProgress.css" />
@@ -84,7 +85,7 @@
           <div class="settingContainer">
             <div class="dropdown">
               <button
-                class="btn btn-secondary dropdown-toggle"
+                class="btn btn-secondary dropdown-toggle text-lowercase"
                 type="button"
                 id="dropdownMenuButton"
                 data-toggle="dropdown"
@@ -95,10 +96,16 @@
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="#" onclick="changedServer(0)"
-                  >Server1</a
+                  >http://speedtest.tupelo.matraex.com/20MB</a
+                >
+                <a class="dropdown-item" href="#" onclick="changedServer(0)"
+                  >http://speedtest.tupelo.matraex.com/100MB</a
                 >
                 <a class="dropdown-item" href="#" onclick="changedServer(1)"
-                  >Server2</a
+                  >http://speedtest2.matraex.com/20MB</a
+                >
+                <a class="dropdown-item" href="#" onclick="changedServer(1)"
+                  >http://speedtest2.matraex.com/100MB</a
                 >
               </div>
             </div>
